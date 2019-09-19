@@ -35,7 +35,7 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": 3,
-  "iteration": 1568793112548,
+  "iteration": 1568880770383,
   "links": [],
   "panels": [
     {
@@ -136,7 +136,8 @@
         "90pct MDM": "#962d82",
         "95pct": "semi-dark-blue",
         "avg": "#70dbed",
-        "avg MDM": "#d683ce"
+        "avg MDM": "#d683ce",
+        "latency 90pct": "purple"
       },
       "bars": false,
       "dashLength": 10,
@@ -222,6 +223,14 @@
           "intervalFactor": 1,
           "legendFormat": "90pct",
           "refId": "B"
+        },
+        {
+          "datasource": "Prometheus",
+          "expr": "avg(jmeter_latency{requestName!~\".+XX.+\"})",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "latency 90pct",
+          "refId": "C"
         }
       ],
       "thresholds": [
@@ -1464,7 +1473,7 @@
     ]
   },
   "timezone": "",
-  "title": "ESFL vol.3",
+  "title": "SLA",
   "uid": "uAbR86Qiq",
-  "version": 41
+  "version": 42
 }
