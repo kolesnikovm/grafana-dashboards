@@ -35,7 +35,7 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": 3,
-  "iteration": 1568880770383,
+  "iteration": 1570439816913,
   "links": [],
   "panels": [
     {
@@ -136,8 +136,7 @@
         "90pct MDM": "#962d82",
         "95pct": "semi-dark-blue",
         "avg": "#70dbed",
-        "avg MDM": "#d683ce",
-        "latency 90pct": "purple"
+        "avg MDM": "#d683ce"
       },
       "bars": false,
       "dashLength": 10,
@@ -223,14 +222,6 @@
           "intervalFactor": 1,
           "legendFormat": "90pct",
           "refId": "B"
-        },
-        {
-          "datasource": "Prometheus",
-          "expr": "avg(jmeter_latency{requestName!~\".+XX.+\"})",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "latency 90pct",
-          "refId": "C"
         }
       ],
       "thresholds": [
@@ -378,6 +369,95 @@
       }
     },
     {
+      "aliasColors": {
+        "received": "semi-dark-orange",
+        "sent": "light-yellow"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "fill": 1,
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 21
+      },
+      "id": 26,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "(avg(rate(jmeter_request_size_in_bytes_sum{requestName=~\".+XX.+\"}[10s])/rate(jmeter_request_size_in_bytes_count{requestName=~\".+XX.+\"}[10s])) by(requestDirection)) * on(requestName) group_left sum(rate(jmeter_requests{requestName=~\".+XX.+\"}[10s]))",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{requestDirection}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Sent/Received",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "decbytes",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
       "columns": [],
       "datasource": "-- Mixed --",
       "fontSize": "100%",
@@ -385,7 +465,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 21
+        "y": 28
       },
       "id": 22,
       "links": [],
@@ -572,7 +652,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 28
+        "y": 35
       },
       "id": 10,
       "panels": [],
@@ -602,7 +682,7 @@
         "h": 7,
         "w": 4,
         "x": 0,
-        "y": 29
+        "y": 36
       },
       "id": 12,
       "interval": null,
@@ -672,7 +752,7 @@
         "h": 7,
         "w": 10,
         "x": 4,
-        "y": 29
+        "y": 36
       },
       "id": 14,
       "links": [],
@@ -775,7 +855,7 @@
         "h": 7,
         "w": 10,
         "x": 14,
-        "y": 29
+        "y": 36
       },
       "id": 16,
       "links": [],
@@ -898,7 +978,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 36
+        "y": 43
       },
       "id": 8,
       "legend": {
@@ -981,7 +1061,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 43
+        "y": 50
       },
       "id": 18,
       "panels": [],
@@ -1002,7 +1082,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 44
+        "y": 51
       },
       "id": 19,
       "interval": "$aggregation",
@@ -1032,6 +1112,7 @@
           "expr": "sum(rate(jmeter_requests{requestName=\"$transaction\"}[10s])) by (requestStatus)",
           "format": "time_series",
           "intervalFactor": 1,
+          "legendFormat": "{{requestStatus}}",
           "refId": "A"
         }
       ],
@@ -1091,7 +1172,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 44
+        "y": 51
       },
       "id": 20,
       "interval": "$aggregation",
@@ -1181,7 +1262,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 51
+        "y": 58
       },
       "id": 24,
       "links": [],
@@ -1375,8 +1456,8 @@
       {
         "allValue": null,
         "current": {
-          "text": "[TC] UC01_XX_Contracts",
-          "value": "[TC] UC01_XX_Contracts"
+          "text": "[TC] UC01_XX_GetYandex",
+          "value": "[TC] UC01_XX_GetYandex"
         },
         "datasource": "Prometheus",
         "definition": "label_values(jmeter_requests, requestName)",
@@ -1444,7 +1525,7 @@
     ]
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {
@@ -1475,5 +1556,5 @@
   "timezone": "",
   "title": "SLA",
   "uid": "uAbR86Qiq",
-  "version": 42
+  "version": 48
 }
