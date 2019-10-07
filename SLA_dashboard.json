@@ -35,7 +35,7 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": 3,
-  "iteration": 1570439816913,
+  "iteration": 1570461476067,
   "links": [],
   "panels": [
     {
@@ -473,8 +473,8 @@
       "scroll": true,
       "showHeader": true,
       "sort": {
-        "col": 3,
-        "desc": true
+        "col": 1,
+        "desc": false
       },
       "styles": [
         {
@@ -587,6 +587,38 @@
           "unit": "none"
         },
         {
+          "alias": "Sent Bytes",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "Value #E",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        },
+        {
+          "alias": "Received Bytes",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "Value #F",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        },
+        {
           "alias": "",
           "colorMode": null,
           "colors": [
@@ -626,6 +658,7 @@
           "datasource": "Prometheus",
           "expr": "avg(\navg_over_time(jmeter_response_time{requestName=~\".+XX.+\"}[${__range_s}s])\n) by (runId, requestName)",
           "format": "table",
+          "hide": false,
           "instant": true,
           "intervalFactor": 1,
           "legendFormat": "90pct",
@@ -640,6 +673,26 @@
           "intervalFactor": 1,
           "legendFormat": "errors",
           "refId": "D"
+        },
+        {
+          "datasource": "Prometheus",
+          "expr": "sum(\n  avg_over_time(jmeter_request_size_in_bytes_sum{requestName=~\".+XX.+\", requestDirection=\"sent\"}[${__range_s}s])\n  / avg_over_time(jmeter_request_size_in_bytes_count{requestName=~\".+XX.+\", requestDirection=\"sent\"}[${__range_s}s])\n) by (runId, requestName)\n* sum(\n  irate(jmeter_requests{requestName=~\".+XX.+\"}[${__range_s}s])\n) by (runId, requestName)",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "intervalFactor": 1,
+          "legendFormat": "sent bytes",
+          "refId": "E"
+        },
+        {
+          "datasource": "Prometheus",
+          "expr": "sum(\n  avg_over_time(jmeter_request_size_in_bytes_sum{requestName=~\".+XX.+\", requestDirection=\"received\"}[${__range_s}s])\n  / avg_over_time(jmeter_request_size_in_bytes_count{requestName=~\".+XX.+\", requestDirection=\"received\"}[${__range_s}s])\n) by (runId, requestName)\n* sum(\n  irate(jmeter_requests{requestName=~\".+XX.+\"}[${__range_s}s])\n) by (runId, requestName)",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "intervalFactor": 1,
+          "legendFormat": "received bytes",
+          "refId": "F"
         }
       ],
       "title": "Aggregate Report",
@@ -1456,8 +1509,8 @@
       {
         "allValue": null,
         "current": {
-          "text": "[TC] UC01_XX_GetYandex",
-          "value": "[TC] UC01_XX_GetYandex"
+          "text": "[TC] UC01_XX_Request",
+          "value": "[TC] UC01_XX_Request"
         },
         "datasource": "Prometheus",
         "definition": "label_values(jmeter_requests, requestName)",
@@ -1525,7 +1578,7 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {
@@ -1556,5 +1609,5 @@
   "timezone": "",
   "title": "SLA",
   "uid": "uAbR86Qiq",
-  "version": 48
+  "version": 54
 }
